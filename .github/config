@@ -16,20 +16,26 @@ cd lede
     git clone https://github.com/lisaac/luci-lib-docker
     git clone https://github.com/lisaac/luci-app-dockerman
 
-    sed -i 's/+docker-ce/+docker +dockerd/' luci-app-dockerman/applications/luci-app-dockerman/Makefile
+ #   sed -i 's/+docker-ce/+docker +dockerd/' luci-app-dockerman/applications/luci-app-dockerman/Makefile
 
     rm -rf lean/{samba4,luci-app-samba4,luci-app-ttyd,luci-theme-argon,luci-lib-docker}
 )
 
 cat >feeds.conf.default <<-EOF
 src-git luci https://github.com/Lienol/openwrt-luci.git;18.06
-src-git packages https://github.com/Lienol/openwrt-packages.git;main
+src-git lienol https://github.com/Lienol/openwrt-packages.git;main
+src-git packages https://github.com/coolsnowwolf/packages
 src-git routing https://git.openwrt.org/feed/routing.git
 src-git telephony https://git.openwrt.org/feed/telephony.git
 src-git helloworld https://github.com/fw876/helloworld.git
 EOF
 
 ./scripts/feeds update -a
+
+rm -rf feeds/packages/utils/btrfs-progs
+rm -rf feeds/packages/utils/containerd
+rm -rf feeds/packages/utils/dockerd
+
 ./scripts/feeds install -a
 
 git apply ../.github/patches/{0001*,0002*}.patch --directory=feeds/luci
