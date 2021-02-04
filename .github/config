@@ -31,11 +31,6 @@ src-git helloworld https://github.com/fw876/helloworld.git
 EOF
 
 ./scripts/feeds update -a
-
-rm -rf feeds/packages/utils/btrfs-progs
-rm -rf feeds/packages/utils/containerd
-rm -rf feeds/packages/utils/dockerd
-
 ./scripts/feeds install -a
 
 git apply ../.github/patches/{0001*,0002*}.patch --directory=feeds/luci
