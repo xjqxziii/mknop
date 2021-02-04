@@ -1,7 +1,10 @@
 #!/bin/bash
 
-cd lede
+git clone https://github.com/Lienol/openwrt/ LienolOpenwrt
+rm -rf lede/package/libs/nettle
+mv LienolOpenwrt/package/libs/{libaudit,libsemanage,musl-fts,nettle} lede/package/libs
 
+cd lede
 (
     cd package
     git clone https://github.com/tuanqing/install-program
@@ -9,16 +12,13 @@ cd lede
 #     git clone https://github.com/tuanqing/luci-app-mentohust
     git clone https://github.com/jerrykuku/luci-theme-argon -b 18.06
     git clone https://github.com/jerrykuku/luci-app-jd-dailybonus
-    git clone https://github.com/jerrykuku/luci-app-ttnode
     git clone https://github.com/jerrykuku/luci-app-argon-config
     git clone https://github.com/lisaac/luci-lib-docker
     git clone https://github.com/lisaac/luci-app-dockerman
 
     sed -i 's/+docker-ce/+docker +dockerd/' luci-app-dockerman/applications/luci-app-dockerman/Makefile
 
-    rm -rf libs/nettle
     rm -rf lean/{samba4,luci-app-samba4,luci-app-ttyd,luci-theme-argon,luci-lib-docker}
-    svn co https://github.com/Lienol/openwrt/branches/main/package/libs/{libaudit,libsemanage,musl-fts,nettle} libs
 )
 
 cat >feeds.conf.default <<-EOF
