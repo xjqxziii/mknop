@@ -9,8 +9,8 @@ rm -rf LienolOpenwrt
 (
     cd package
     git clone https://github.com/tuanqing/install-program
-     git clone https://github.com/tuanqing/openwrt-mentohust
-     git clone https://github.com/tuanqing/luci-app-mentohust
+    git clone https://github.com/tuanqing/openwrt-mentohust
+    git clone https://github.com/tuanqing/luci-app-mentohust
     git clone https://github.com/jerrykuku/luci-theme-argon -b 18.06
     git clone https://github.com/jerrykuku/luci-app-jd-dailybonus
     git clone https://github.com/jerrykuku/luci-app-argon-config
