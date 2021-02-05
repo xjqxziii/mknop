@@ -30,11 +30,6 @@ EOF
 ./scripts/feeds install -a
 
 git apply ../.github/patches/{0001*,0002*}.patch --directory=feeds/luci
-(
-    cd feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status
-    mv index.htm index.htm.old
-    cp index_arm.htm index.htm
-)
 
 zzz="package/lean/default-settings/files/zzz-default-settings"
 sed -i 's/samba/samba4/' $zzz
