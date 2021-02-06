@@ -43,6 +43,13 @@ jobs:
           cd lede
           make download -j8
           make -j$(nproc) || make -j1 V=s
+          cp bin/targets/*/*/*.tar.gz ./openwrt-out
+
+      - name: Upload raw firmware
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ env.firmware_raw }}
+          path: lede/openwrt-out
 
       - name: Build firmware
         run: |
