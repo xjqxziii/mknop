@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 22 * * 5'
   workflow_dispatch:
+    inputs:
+      wxtz:
+        description: '微信通知'
+        required: false
+        default: 'false'
     
 env:
   TZ: 'Asia/Shanghai'
@@ -26,6 +31,7 @@ jobs:
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
           sudo timedatectl set-timezone $TZ
+          echo "SERVERCHAN_SCKEY=${SERVERCHAN_SCKEY}" >> $GITHUB_ENV
 
       - name: Clone Lean's openwrt
         run: |
@@ -38,6 +44,14 @@ jobs:
           chmod +x $CONFIG
           ./$CONFIG
 
+      - name: 微信通知
+        uses: emon100/Action-Serverchan@v2
+        if: github.event.inputs.wxtz == 'true'
+        with:
+          SCKEY: ${{ secrets.SCKEY }}
+          text: 主人[mknop]编译开始啦
+          desp: 主人您要编译的[mknop]固件正在努力耕耘中,请耐心等待......
+  
       - name: download openwrt
         run: |
           cd lede
@@ -47,6 +61,8 @@ jobs:
         run: |
           cd lede
           make -j$(nproc) || make -j1 V=s
+          echo "::set-output name=status::success"
+          echo "date1=$(date "+%Y年%m月%d号-%H点%M分")" >> $GITHUB_ENV
 
       - name: Build firmware
         run: |
@@ -62,6 +78,7 @@ jobs:
             cd ../
             echo "firmware_$x=$filename" >> $GITHUB_ENV
           done
+          
 
       - name: Upload firmware @ phicomm n1
         uses: actions/upload-artifact@main
@@ -90,5 +107,19 @@ jobs:
       - name: Upload raw firmware
         uses: actions/upload-artifact@main
         with:
-          name: ${{ env.firmware_raw }}
+          name: firmware_raw
           path: openwrt
+   
+      - name: 微信通知
+        uses: emon100/Action-Serverchan@v2
+        if: github.event.inputs.wxtz == 'true' 
+        with:
+          SCKEY: ${{ secrets.SCKEY }}
+          text: 恭喜主人[mknop]固件编译成功！
+          desp: 我亲爱的主人您要编译的[mknop]固件顺利编译完成了！
+              
+              完成时间：${{ env.date1 }}
+              
+              发布地址：https://github.com/xjqxziii/mknop
+              
+              祝小主人见人爱，花见花开，车见车载，天天好心情🎈！！！
