@@ -38,10 +38,14 @@ jobs:
           chmod +x $CONFIG
           ./$CONFIG
 
-      - name: Compile openwrt
+      - name: download openwrt
         run: |
           cd lede
           make download -j8
+  
+      - name: Compile openwrt
+        run: |
+          cd lede
           make -j$(nproc) || make -j1 V=s
 
       - name: Build firmware
