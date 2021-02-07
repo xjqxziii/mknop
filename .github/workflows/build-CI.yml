@@ -78,6 +78,7 @@ jobs:
             cd ../
             echo "firmware_$x=$filename" >> $GITHUB_ENV
           done
+          
 
       - name: Upload firmware @ phicomm n1
         uses: actions/upload-artifact@main
@@ -106,7 +107,7 @@ jobs:
       - name: Upload raw firmware
         uses: actions/upload-artifact@main
         with:
-          name: ${{ env.firmware_raw }}
+          name: firmware_raw
           path: openwrt
    
       - name: 微信通知
