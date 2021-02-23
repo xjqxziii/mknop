@@ -3,7 +3,7 @@
 
 **制作脚本已部署到 Github Action，真正实现一栈式全自动构建，每周六早上六点准时为你构建，无须自行制作，下载即可用**
 
-[![OpenWrt-CI](https://github.com/tuanqing/mknop/workflows/OpenWrt-CI/badge.svg?branch=master)](https://github.com/tuanqing/mknop/actions)  
+[![OpenWrt-CI](https://github.com/xjqxziii/mknop/workflows/OpenWrt-CI/badge.svg?branch=master)](https://github.com/xjqxziii/mknop/actions)  
  👆👆👆&nbsp; &nbsp; 戳上面查看构建状态
 
 ## Usage
